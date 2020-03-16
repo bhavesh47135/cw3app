@@ -27,7 +27,7 @@
                         <Button text="Open drawer" @tap="onOpenDrawerTap()"
                         class="drawerContentButton"></Button>
 
-                        <TextField hint="Enter course name..." v-model="searchBar"/>
+                        <TextField hint="Enter course name..." autocapitalizationType="none" v-model="searchBar"/>
 
                         <ListView class="list-group" for="course in filteredList">
                             <v-template>
@@ -55,7 +55,7 @@
     import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
     Vue.use(RadSideDrawer);
 
-    /*fetch("https://20e69a0f.ngrok.io/courses").then(
+    /*fetch("https://2116096f.ngrok.io/courses").then(
         function (response) {
             response.json().then(
                 function (text) {
@@ -97,7 +97,7 @@
             },
             filteredList() {
                 return courses.filter(course => {
-                    var searchCourse = course.topic.includes(this.searchBar);
+                    var searchCourse = course.topic.toLowerCase().includes(this.searchBar);
                     var filterCourse = this.userLocations.length == 0 || this.userLocations.includes(course.location);
                     return searchCourse && filterCourse;
                     //return courses.topic.toLowerCase().includes(this.searchBar.toLowerCase())
