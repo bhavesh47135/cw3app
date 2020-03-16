@@ -8,13 +8,26 @@
 
                 <StackLayout ~drawerContent>
 
-                    <Label text="Filter by location" class="h2"/>
-                    
-                    <!--<ListPicker v-bind="item in items" class="picker"/>-->
+                    <Label text="Filter by Location" class="h2"/>
 
-                    <Label text="Sort by price" class='h2' />
-                    <Label text="Ascending" @tap='sortAscend'/>
-                    <Label text="Descending" @tap='sortDescend'/>
+                    <FlexboxLayout>
+                        <Label text="Hendon"/> 
+                        <Switch checked="false" loaded="addHendon"/>
+                    </FlexboxLayout>
+
+                    <FlexboxLayout>
+                        <Label text="Golders Green"/> 
+                        <Switch checked="false" loaded="addGolders"/>
+                    </FlexboxLayout>
+
+                    <FlexboxLayout>
+                        <Label text="Brent Cross"/> 
+                        <Switch checked="false" loaded="addBrent"/>
+                    </FlexboxLayout>
+
+                    <Label text="Sort by Price" class='h2'/>
+                    <Button col="1" row="0" text="Sort Price - Ascending" @tap="sortAscend" />
+                    <Button col="1" row="0" text="Sort Price - Descending" @tap="sortDescend" />
 
                     <Label text="Close Drawer" color="blue" padding="10" style="horizontal-align: center" @tap="onCloseDrawerTap"/>
                     
@@ -51,6 +64,8 @@
 
     import courses from './courses.json';
 
+    import * as http from "http";
+
     import Vue from "nativescript-vue";
     import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
     Vue.use(RadSideDrawer);
@@ -64,14 +79,22 @@
             });
     })*/
 
+    function sortDescending(a, b) {
+        if (a.price > b.price) return -1;
+        if (a.price < b.price) return 1; return 0;
+    }
+
+    function sortAscending(a, b) {
+        if (a.price < b.price) return -1;
+        if (a.price > b.price) return 1; return 0;
+    }
+
     export default {
         data() {
             return {
                 courses: courses,
                 searchBar: "",
                 userLocations: [],
-                title: "Side Drawer example",
-                locations: ["hendon", "brent cross", "golders green"]
             }
         },
         methods: {
@@ -81,12 +104,36 @@
             onCloseDrawerTap() {
                 this.$refs.drawer.closeDrawer();
             },
-            sortAscend() {
-                console.log("sortAscend pressed.");
-            },
             sortDescend() {
                 console.log("sortDescend pressed.");
-            }
+                this.courses.sort(sortDescending);
+                this.searchBar = " ";
+                this.searchBar = "";
+            },
+            sortAscend() {
+                console.log("sortAscend pressed.");
+                this.courses.sort(sortAscending);
+                this.searchBar = " ";
+                this.searchBar = "";
+            },
+            /*addHendon(argsloaded) {
+                //this.userLocations.push("Hendon")
+                //console.log("Hendon")
+                const mySwitch = argsloaded.object;
+                mySwitch.on("checkedChange", (args) => {
+                    const sw = args.object;
+                    const isChecked = sw.checked;
+                    console.log(`Switch new value ${isChecked}`);
+                    console.log("Worked!!!!!!!!");
+                });
+                exports.onSwitchLoaded = onSwitchLoaded;
+            },
+            addGolders() {
+                this.userLocations.push("Golders Green")
+            },
+            addBrent() {
+                this.userLocations.push("Brent Cross")
+            }*/
         },
         computed: {
             topics: function () { // return an array of all the topics
@@ -97,10 +144,9 @@
             },
             filteredList() {
                 return courses.filter(course => {
-                    var searchCourse = course.topic.toLowerCase().includes(this.searchBar);
+                    var searchCourse = course.topic.toLowerCase().includes(this.searchBar.toLowerCase());
                     var filterCourse = this.userLocations.length == 0 || this.userLocations.includes(course.location);
                     return searchCourse && filterCourse;
-                    //return courses.topic.toLowerCase().includes(this.searchBar.toLowerCase())
                 })
             }
         }
