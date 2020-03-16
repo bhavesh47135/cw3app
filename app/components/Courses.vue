@@ -10,24 +10,21 @@
 
                     <Label text="Filter by Location" class="h2"/>
 
-                    <FlexboxLayout>
-                        <Label text="Hendon"/> 
-                        <Switch checked="false" loaded="addHendon"/>
-                    </FlexboxLayout>
+                    <Button col="1" row="0" text="Hendon" @tap="addHendon"/>
 
-                    <FlexboxLayout>
-                        <Label text="Golders Green"/> 
-                        <Switch checked="false" loaded="addGolders"/>
-                    </FlexboxLayout>
+                    <Button col="1" row="0" text="Brent Cross" @tap="addBrent"/>
 
-                    <FlexboxLayout>
-                        <Label text="Brent Cross"/> 
-                        <Switch checked="false" loaded="addBrent"/>
-                    </FlexboxLayout>
+                    <Button col="1" row="0" text="Golders Green" @tap="addGolders"/>
+
+                    <Button col="1" row="0" text="Colindale" @tap="addColindale"/>
+
+                    <Button col="1" row="0" text="Reset" @tap="resetFilters"/>
 
                     <Label text="Sort by Price" class='h2'/>
-                    <Button col="1" row="0" text="Sort Price - Ascending" @tap="sortAscend" />
-                    <Button col="1" row="0" text="Sort Price - Descending" @tap="sortDescend" />
+
+                    <Button col="1" row="0" text="Sort Price - Ascending" @tap="sortAscend"/>
+
+                    <Button col="1" row="0" text="Sort Price - Descending" @tap="sortDescend"/>
 
                     <Label text="Close Drawer" color="blue" padding="10" style="horizontal-align: center" @tap="onCloseDrawerTap"/>
                     
@@ -64,20 +61,9 @@
 
     import courses from './courses.json';
 
-    import * as http from "http";
-
     import Vue from "nativescript-vue";
     import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
     Vue.use(RadSideDrawer);
-
-    /*fetch("https://2116096f.ngrok.io/courses").then(
-        function (response) {
-            response.json().then(
-                function (text) {
-                    this.courses = text,
-                    console.log(text);
-            });
-    })*/
 
     function sortDescending(a, b) {
         if (a.price > b.price) return -1;
@@ -116,24 +102,21 @@
                 this.searchBar = " ";
                 this.searchBar = "";
             },
-            /*addHendon(argsloaded) {
-                //this.userLocations.push("Hendon")
-                //console.log("Hendon")
-                const mySwitch = argsloaded.object;
-                mySwitch.on("checkedChange", (args) => {
-                    const sw = args.object;
-                    const isChecked = sw.checked;
-                    console.log(`Switch new value ${isChecked}`);
-                    console.log("Worked!!!!!!!!");
-                });
-                exports.onSwitchLoaded = onSwitchLoaded;
+            resetFilters() {
+                return this.userLocations = [];
+            },
+            addHendon() {
+                this.userLocations.push("Hendon");
             },
             addGolders() {
-                this.userLocations.push("Golders Green")
+                this.userLocations.push("Golders Green");
             },
             addBrent() {
-                this.userLocations.push("Brent Cross")
-            }*/
+                this.userLocations.push("Brent Cross");
+            },
+            addColindale() {
+                this.userLocations.push("Colindale");
+            }
         },
         computed: {
             topics: function () { // return an array of all the topics

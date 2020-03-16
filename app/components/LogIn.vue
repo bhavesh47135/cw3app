@@ -13,7 +13,7 @@
 
             <FlexboxLayout flexDirection="row" class="list-group-item">
                 <Label class="inputext" text="Password: "/>
-                <TextField class="input" hint="Enter password..." secure="false" autocapitalizationType="none" v-model="password"/>
+                <TextField class="input" hint="Enter password..." secure="true" autocapitalizationType="none" v-model="password"/>
             </FlexboxLayout>
 
             <Button col="1" row="0" text="Log In" @tap="onButtonTap" />
