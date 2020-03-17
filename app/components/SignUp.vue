@@ -44,7 +44,7 @@
         methods: {
             onButtonTap() {
                 http.request ({
-                    url: "https://2116096f.ngrok.io/newUser",
+                    url: "https://2de0c914.ngrok.io/newUser",
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     content: JSON.stringify({

@@ -8,15 +8,13 @@
 
                 <StackLayout ~drawerContent>
 
-                    <Label text="Filter by Location" class="h2"/>
+                    <Label text="Filter by Topic" class="h2"/>
 
-                    <Button col="1" row="0" text="Hendon" @tap="addHendon"/>
+                    <Button col="1" row="0" text="Math" @tap="addMath"/>
 
-                    <Button col="1" row="0" text="Brent Cross" @tap="addBrent"/>
+                    <Button col="1" row="0" text="English" @tap="addEnglish"/>
 
-                    <Button col="1" row="0" text="Golders Green" @tap="addGolders"/>
-
-                    <Button col="1" row="0" text="Colindale" @tap="addColindale"/>
+                    <Button col="1" row="0" text="Piano" @tap="addPiano"/>
 
                     <Button col="1" row="0" text="Reset" @tap="resetFilters"/>
 
@@ -80,7 +78,7 @@
             return {
                 courses: courses,
                 searchBar: "",
-                userLocations: [],
+                filterTopics: [],
             }
         },
         methods: {
@@ -103,19 +101,16 @@
                 this.searchBar = "";
             },
             resetFilters() {
-                return this.userLocations = [];
+                return this.filterTopics = [];
             },
-            addHendon() {
-                this.userLocations.push("Hendon");
+            addMath() {
+                this.filterTopics.push("Math");
             },
-            addGolders() {
-                this.userLocations.push("Golders Green");
+            addEnglish() {
+                this.filterTopics.push("English");
             },
-            addBrent() {
-                this.userLocations.push("Brent Cross");
-            },
-            addColindale() {
-                this.userLocations.push("Colindale");
+            addPiano() {
+                this.filterTopics.push("Piano");
             }
         },
         computed: {
@@ -128,7 +123,7 @@
             filteredList() {
                 return courses.filter(course => {
                     var searchCourse = course.topic.toLowerCase().includes(this.searchBar.toLowerCase());
-                    var filterCourse = this.userLocations.length == 0 || this.userLocations.includes(course.location);
+                    var filterCourse = this.filterTopics.length == 0 || this.filterTopics.includes(course.topic);
                     return searchCourse && filterCourse;
                 })
             }
